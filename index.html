@@ -17,6 +17,7 @@
             --terminal-text: #f0f0f0;
             --terminal-prompt: #4cc9f0;
             --terminal-command: #a5d8ff;
+            --terminal-output: #c9c9c9;
             --border-radius: 12px;
             --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
@@ -29,16 +30,28 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            background-color: #f5f7fa;
         }
 
         header {
             text-align: center;
             margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
 
         h1 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
         }
 
         .solution-container {
@@ -54,12 +67,16 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             transition: var(--transition);
+            border-top: 4px solid var(--accent-color);
         }
 
         .solution-card:hover {
             transform: translateY(-5px);
-            background: var(--accent-color);
-            color: white;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .solution-card h3 {
+            color: var(--primary-color);
         }
 
         .terminal {
@@ -67,9 +84,10 @@
             color: var(--terminal-text);
             padding: 1.5rem;
             border-radius: var(--border-radius);
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
             margin: 2rem 0;
             overflow-x: auto;
+            line-height: 1.8;
         }
 
         .terminal-prompt {
@@ -79,6 +97,19 @@
         .terminal-command {
             color: var(--terminal-command);
             font-weight: bold;
+        }
+
+        .terminal-output {
+            color: var(--terminal-output);
+            margin-left: 1.5rem;
+        }
+
+        .terminal-success {
+            color: #4ade80;
+        }
+
+        .terminal-warning {
+            color: #fbbf24;
         }
 
         .phase-timeline {
@@ -91,6 +122,9 @@
             margin-bottom: 2rem;
             border-left: 4px solid var(--primary-color);
             position: relative;
+            background-color: white;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--box-shadow);
         }
 
         .phase:before {
@@ -102,27 +136,42 @@
             background: var(--primary-color);
             left: -12px;
             top: 1.5rem;
+            border: 3px solid white;
         }
 
         .budget-table {
             width: 100%;
             border-collapse: collapse;
             margin: 2rem 0;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
 
         .budget-table th, .budget-table td {
-            padding: 12px;
+            padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .budget-table th {
             background-color: var(--primary-color);
             color: white;
+            font-weight: 600;
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
         }
 
         .budget-table tr:hover {
             background-color: #f5f5f5;
+        }
+
+        .budget-table tfoot {
+            font-weight: bold;
+            background-color: #f0f0f0;
         }
 
         footer {
@@ -130,6 +179,22 @@
             margin-top: 3rem;
             padding-top: 2rem;
             border-top: 1px solid #eee;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .solution-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .terminal {
+                font-size: 0.9rem;
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -137,6 +202,7 @@
     <header>
         <h1>Plano Integrado de Recuperação de Estradas</h1>
         <h2>Rio Branco do Ivaí - Paraná</h2>
+        <p>Uma solução abrangente para os problemas viários do município</p>
     </header>
 
     <section>
@@ -147,6 +213,7 @@
             <li>Drenagem inadequada em áreas críticas</li>
             <li>Falta de sinalização em 40% das estradas rurais</li>
             <li>Erosão nas margens de estradas vicinais</li>
+            <li>Pavimentação desgastada nas vias principais</li>
         </ul>
     </section>
 
@@ -158,6 +225,7 @@
                 <li>Tapa-buracos com material asfáltico de qualidade</li>
                 <li>Limpeza de bueiros e sistemas de drenagem</li>
                 <li>Sinalização provisória em áreas perigosas</li>
+                <li>Estabilização de taludes em áreas de risco</li>
             </ul>
         </div>
 
@@ -168,6 +236,7 @@
                 <li>Recapeamento de 15km de estradas prioritárias</li>
                 <li>Reforma de 8 pontes e viadutos</li>
                 <li>Instalação de nova sinalização vertical</li>
+                <li>Implantação de sistema de drenagem eficiente</li>
             </ul>
         </div>
 
@@ -178,17 +247,24 @@
                 <li>Equipe de monitoramento permanente</li>
                 <li>Programa de roçagem e limpeza trimestral</li>
                 <li>Parcerias com produtores rurais para fiscalização</li>
+                <li>Sistema de resposta rápida para reparos</li>
             </ul>
         </div>
     </div>
 
     <div class="terminal">
-        <div><span class="terminal-prompt">rio-branco-estradas@solucao:~$</span> <span class="terminal-command">sudo iniciar-plano-estradas --prioridade=alta</span></div>
-        <div>> Verificando recursos disponíveis... OK</div>
-        <div>> Mobilizando equipes técnicas... OK</div>
-        <div>> Alocando R$ 1.250.000,00 para fase 1... CONFIRMADO</div>
-        <div>> Estabelecendo parcerias com DER/PR... EM ANDAMENTO</div>
-        <div>> Sistema de monitoramento ativado... SUCESSO</div>
+        <div><span class="terminal-prompt">administrador@riobranco-ivaí:~$</span> <span class="terminal-command">iniciar_plano_estradas --fase=emergencial</span></div>
+        <div class="terminal-output">> Verificando recursos disponíveis... <span class="terminal-success">OK</span></div>
+        <div class="terminal-output">> Mobilizando equipes técnicas... <span class="terminal-success">OK</span></div>
+        <div class="terminal-output">> Alocando R$ 350.000,00 para reparos emergenciais... <span class="terminal-success">CONFIRMADO</span></div>
+        <div class="terminal-output">> Estabelecendo parcerias com DER/PR... <span class="terminal-warning">EM ANDAMENTO</span></div>
+        <div class="terminal-output">> Sistema de monitoramento ativado... <span class="terminal-success">SUCESSO</span></div>
+        <br>
+        <div><span class="terminal-prompt">administrador@riobranco-ivaí:~$</span> <span class="terminal-command">verificar_status --projeto=recapeamento</span></div>
+        <div class="terminal-output">> Status do projeto de recapeamento:</div>
+        <div class="terminal-output">- Vias mapeadas: 15km</div>
+        <div class="terminal-output">- Orçamento aprovado: R$ 1.250.000,00</div>
+        <div class="terminal-output">- Previsão de início: 03/2024</div>
     </div>
 
     <section class="phase-timeline">
@@ -199,7 +275,9 @@
             <ul>
                 <li>Reparos emergenciais nos trechos mais críticos</li>
                 <li>Levantamento completo da malha viária</li>
-                <li>Elaboração de projeto executivo</li>
+                <li>Elaboração de projeto executivo detalhado</li>
+                <li>Aquisição de materiais básicos para manutenção</li>
+                <li>Treinamento inicial das equipes</li>
             </ul>
         </div>
         
@@ -208,7 +286,9 @@
             <ul>
                 <li>Recapeamento das principais vias de acesso</li>
                 <li>Reforma de pontes e bueiros</li>
-                <li>Implantação de sistema de drenagem</li>
+                <li>Implantação de sistema de drenagem eficiente</li>
+                <li>Instalação de sinalização vertical e horizontal</li>
+                <li>Pavimentação de trechos estratégicos</li>
             </ul>
         </div>
         
@@ -217,7 +297,9 @@
             <ul>
                 <li>Programa de conservação preventiva</li>
                 <li>Monitoramento via aplicativo (participação popular)</li>
-                <li>Treinamento de equipes municipais</li>
+                <li>Treinamento contínuo de equipes municipais</li>
+                <li>Relatórios trimestrais de avaliação</li>
+                <li>Atualização constante do plano viário</li>
             </ul>
         </div>
     </section>
@@ -254,6 +336,11 @@
                     <td>400.000,00</td>
                 </tr>
                 <tr>
+                    <td>Drenagem</td>
+                    <td>Sistema de escoamento pluvial</td>
+                    <td>180.000,00</td>
+                </tr>
+                <tr>
                     <td>Manutenção Anual</td>
                     <td>Programa contínuo</td>
                     <td>250.000,00</td>
@@ -262,7 +349,7 @@
             <tfoot>
                 <tr>
                     <td colspan="2">TOTAL ESTIMADO</td>
-                    <td><strong>2.370.000,00</strong></td>
+                    <td><strong>2.550.000,00</strong></td>
                 </tr>
             </tfoot>
         </table>
@@ -276,6 +363,8 @@
                 <ul>
                     <li>20% do orçamento anual da secretaria de obras</li>
                     <li>Redirecionamento de verbas não utilizadas</li>
+                    <li>Fundo Municipal de Infraestrutura</li>
+                    <li>Parcerias público-privadas locais</li>
                 </ul>
             </div>
             <div class="solution-card">
@@ -283,6 +372,8 @@
                 <ul>
                     <li>Programa DER/PR de Melhoria Viária</li>
                     <li>Convênio com o Fundo Estadual de Transportes</li>
+                    <li>Programa Paraná Cidadão</li>
+                    <li>Recursos da Assembleia Legislativa</li>
                 </ul>
             </div>
             <div class="solution-card">
@@ -290,6 +381,8 @@
                 <ul>
                     <li>Emendas parlamentares</li>
                     <li>Programa Caminhos da Escola (FNDE)</li>
+                    <li>Ministério do Desenvolvimento Regional</li>
+                    <li>Programa de Aceleração do Crescimento (PAC)</li>
                 </ul>
             </div>
         </div>
@@ -298,6 +391,7 @@
     <footer>
         <p>Plano desenvolvido para a Prefeitura Municipal de Rio Branco do Ivaí</p>
         <p>© 2023 - Secretaria Municipal de Obras e Infraestrutura</p>
+        <p>Última atualização: Novembro 2023</p>
     </footer>
 </body>
 </html>
